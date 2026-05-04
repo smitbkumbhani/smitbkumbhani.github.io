@@ -1,10 +1,1597 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Smit Kumbhani</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- EDIT: Page title -->
+  <title>Dr. Your Name | Researcher & Professor</title>
+  <meta name="description" content="Personal academic website of Dr. Your Name, researcher at University of Placeholder." />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       CSS CUSTOM PROPERTIES
+    ========================================================= */
+    :root {
+      --navy:       #0f2545;
+      --navy-mid:   #1a3a6e;
+      --blue:       #2563eb;
+      --blue-light: #3b82f6;
+      --accent:     #c8a951;       /* warm gold accent */
+      --bg:         #f8f9fc;
+      --bg-card:    #ffffff;
+      --bg-section: #eef1f7;
+      --text:       #1e293b;
+      --text-muted: #64748b;
+      --border:     #dde3ee;
+      --radius:     10px;
+      --shadow:     0 4px 24px rgba(15,37,69,.09);
+      --shadow-sm:  0 2px 8px rgba(15,37,69,.07);
+      --nav-height: 64px;
+      --transition: .25s ease;
+      --max-w:      1100px;
+    }
+
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: var(--blue); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--blue-light); }
+    h1,h2,h3,h4 { font-family: 'Lora', serif; line-height: 1.3; }
+    ul { list-style: none; }
+    section { padding: 90px 0; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+    /* =========================================================
+       SECTION HEADINGS
+    ========================================================= */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: clamp(1.7rem, 3vw, 2.3rem);
+      color: var(--navy);
+      margin-bottom: 14px;
+    }
+    .section-divider {
+      width: 50px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--blue));
+      border-radius: 2px;
+      margin-bottom: 46px;
+    }
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 660px;
+      margin-bottom: 46px;
+    }
+    .section-alt { background: var(--bg-section); }
+
+    /* =========================================================
+       NAV
+    ========================================================= */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-height);
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: background var(--transition);
+    }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+      height: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: .01em;
+    }
+    .nav-brand span { color: var(--blue); }
+    .nav-links {
+      display: flex; gap: 6px; align-items: center;
+    }
+    .nav-links a {
+      padding: 6px 13px;
+      border-radius: 6px;
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: background var(--transition), color var(--transition);
+    }
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--bg-section);
+      color: var(--blue);
+    }
+    .nav-links .btn-cv {
+      background: var(--navy);
+      color: #fff !important;
+      padding: 7px 16px;
+      border-radius: 7px;
+      margin-left: 6px;
+      font-weight: 600;
+    }
+    .nav-links .btn-cv:hover { background: var(--blue); }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 8px; border-radius: 6px;
+      background: none; border: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: all .3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* mobile drawer */
+    .nav-mobile {
+      display: none;
+      position: fixed; top: var(--nav-height); left: 0; right: 0;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      z-index: 999;
+      padding: 18px 24px 24px;
+    }
+    .nav-mobile.open { display: block; }
+    .nav-mobile a {
+      display: block;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--blue); }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+    #home {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: var(--nav-height);
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1d4a8a 100%);
+      position: relative; overflow: hidden;
+    }
+    /* subtle geometric decoration */
+    #home::before {
+      content: '';
+      position: absolute; top: -120px; right: -120px;
+      width: 520px; height: 520px;
+      border-radius: 50%;
+      background: rgba(37,99,235,.15);
+      pointer-events: none;
+    }
+    #home::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -60px;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      background: rgba(200,169,81,.08);
+      pointer-events: none;
+    }
+    .hero-inner {
+      display: flex; align-items: center; gap: 60px;
+      flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+    .hero-photo-wrap {
+      flex-shrink: 0;
+    }
+    .hero-photo {
+      width: 210px; height: 210px;
+      border-radius: 50%;
+      border: 4px solid rgba(255,255,255,.2);
+      box-shadow: 0 0 0 8px rgba(255,255,255,.07), var(--shadow);
+      overflow: hidden;
+      background: var(--navy-mid);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-text { flex: 1; min-width: 280px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(200,169,81,.18);
+      border: 1px solid rgba(200,169,81,.35);
+      color: var(--accent);
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: .8rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .hero-badge i { font-size: .75rem; }
+    .hero-name {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+    .hero-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.72);
+      margin-bottom: 6px;
+    }
+    .hero-affil {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 30px;
+    }
+    .hero-affil i { margin-right: 6px; color: var(--accent); }
+    .hero-tagline {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.65);
+      max-width: 500px;
+      margin-bottom: 36px;
+      font-style: italic;
+      font-family: 'Lora', serif;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: .92rem; font-weight: 600;
+      cursor: pointer; border: none;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+    .btn-primary { background: var(--accent); color: var(--navy); }
+    .btn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.35); }
+    .btn-outline:hover { background: rgba(255,255,255,.1); color: #fff; }
+    .hero-socials { display: flex; gap: 14px; margin-top: 28px; }
+    .hero-socials a {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.8);
+      font-size: .85rem;
+      transition: background var(--transition), color var(--transition);
+    }
+    .hero-socials a:hover { background: var(--accent); color: var(--navy); border-color: var(--accent); }
+
+    /* =========================================================
+       ABOUT
+    ========================================================= */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .about-bio { font-size: 1rem; color: var(--text-muted); line-height: 1.8; }
+    .about-bio p + p { margin-top: 16px; }
+    .about-bio strong { color: var(--text); font-weight: 600; }
+
+    .interests-list {
+      display: flex; flex-wrap: wrap; gap: 9px;
+      margin-top: 22px;
+    }
+    .interest-tag {
+      padding: 5px 14px;
+      background: var(--bg-section);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: .82rem; font-weight: 500;
+      color: var(--navy-mid);
+    }
+
+    .edu-block-title {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin-bottom: 24px;
+    }
+    .edu-timeline { position: relative; }
+    .edu-timeline::before {
+      content: '';
+      position: absolute; left: 11px; top: 0; bottom: 0;
+      width: 2px; background: var(--border);
+    }
+    .edu-item {
+      display: flex; gap: 20px;
+      padding-bottom: 28px;
+      position: relative;
+    }
+    .edu-dot {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2.5px solid var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+      position: relative; z-index: 1;
+    }
+    .edu-dot i { font-size: .55rem; color: var(--blue); }
+    .edu-content {}
+    .edu-degree {
+      font-weight: 600; font-size: .95rem; color: var(--text);
+    }
+    .edu-school {
+      font-size: .88rem; color: var(--text-muted); margin-top: 2px;
+    }
+    .edu-year {
+      font-size: .78rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 4px;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: .04em;
+    }
+
+    /* =========================================================
+       RESEARCH
+    ========================================================= */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--accent));
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+      border-color: var(--blue-light);
+    }
+    .project-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--bg-section), #dbeafe);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      color: var(--blue);
+      margin-bottom: 18px;
+    }
+    .project-title {
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .project-desc {
+      font-size: .9rem; color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+    .project-keywords { display: flex; flex-wrap: wrap; gap: 7px; }
+    .kw {
+      padding: 3px 10px;
+      background: #dbeafe;
+      border-radius: 100px;
+      font-size: .75rem;
+      color: var(--blue);
+      font-weight: 500;
+    }
+
+    /* =========================================================
+       PUBLICATIONS
+    ========================================================= */
+    .pub-filter {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+    .pub-filter-btn {
+      padding: 7px 18px;
+      border-radius: 100px;
+      font-size: .85rem; font-weight: 500;
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .pub-filter-btn.active, .pub-filter-btn:hover {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+    .pub-group-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 36px 0 18px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .pub-group-title::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .pub-list { display: flex; flex-direction: column; gap: 16px; }
+    .pub-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex; gap: 18px;
+      align-items: flex-start;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .pub-card:hover { border-color: var(--blue-light); box-shadow: var(--shadow); }
+    .pub-year-badge {
+      flex-shrink: 0;
+      background: var(--bg-section);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 6px 10px;
+      font-size: .78rem; font-weight: 700;
+      color: var(--navy);
+      text-align: center;
+      min-width: 48px;
+    }
+    .pub-content {}
+    .pub-title {
+      font-family: 'Lora', serif;
+      font-size: .97rem; font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+    .pub-meta {
+      font-size: .83rem; color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .pub-meta strong { color: var(--text); }
+    .pub-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .pub-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: .78rem; font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--blue);
+      background: #eff6ff;
+      transition: all var(--transition);
+    }
+    .pub-link:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .pub-link i { font-size: .7rem; }
+
+    /* =========================================================
+       TEACHING
+    ========================================================= */
+    .teaching-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .teaching-philosophy {
+      font-size: .97rem; color: var(--text-muted); line-height: 1.85;
+    }
+    .teaching-philosophy blockquote {
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+      margin: 24px 0;
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--navy);
+    }
+    .courses-list { display: flex; flex-direction: column; gap: 14px; }
+    .course-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), border-color var(--transition);
+    }
+    .course-card:hover { transform: translateX(4px); border-color: var(--blue-light); }
+    .course-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .course-name { font-weight: 600; font-size: .95rem; color: var(--navy); }
+    .course-level {
+      flex-shrink: 0;
+      font-size: .72rem; font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 100px;
+      background: var(--bg-section);
+      color: var(--text-muted);
+      letter-spacing: .05em;
+    }
+    .course-code { font-size: .8rem; color: var(--accent); font-weight: 600; margin: 4px 0; }
+    .course-desc { font-size: .83rem; color: var(--text-muted); margin-top: 6px; }
+
+    /* =========================================================
+       CV
+    ========================================================= */
+    .cv-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .cv-download-card {
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      border-radius: 14px;
+      padding: 36px 32px;
+      color: #fff;
+      margin-bottom: 28px;
+      position: relative; overflow: hidden;
+    }
+    .cv-download-card::after {
+      content: '\f15b';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute; right: -10px; bottom: -20px;
+      font-size: 8rem;
+      color: rgba(255,255,255,.04);
+      pointer-events: none;
+    }
+    .cv-download-card h3 {
+      font-size: 1.2rem; color: #fff; margin-bottom: 8px;
+    }
+    .cv-download-card p { font-size: .88rem; color: rgba(255,255,255,.65); margin-bottom: 22px; }
+    .btn-download {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent);
+      color: var(--navy);
+      padding: 11px 22px;
+      border-radius: 8px;
+      font-weight: 700; font-size: .9rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.25); color: var(--navy); }
+
+    .positions-list { display: flex; flex-direction: column; gap: 0; }
+    .position-item {
+      display: flex; gap: 20px;
+      padding-bottom: 28px;
+      position: relative;
+    }
+    .position-item::before {
+      content: '';
+      position: absolute; left: 11px; top: 26px; bottom: 0;
+      width: 2px; background: var(--border);
+    }
+    .position-item:last-child::before { display: none; }
+    .pos-dot {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--blue);
+      margin-top: 3px;
+      position: relative; z-index: 1;
+    }
+    .pos-role { font-weight: 600; font-size: .95rem; color: var(--navy); }
+    .pos-place { font-size: .88rem; color: var(--text-muted); margin-top: 3px; }
+    .pos-period {
+      font-size: .78rem; color: var(--accent); font-weight: 600;
+      margin-top: 5px; letter-spacing: .04em;
+    }
+
+    /* =========================================================
+       CONTACT
+    ========================================================= */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+    }
+    .contact-info-list { display: flex; flex-direction: column; gap: 22px; }
+    .contact-info-item { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-icon {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--bg-section);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--blue);
+      font-size: 1rem;
+    }
+    .contact-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+    .contact-value { font-size: .95rem; color: var(--text); font-weight: 500; }
+    .contact-value a { color: var(--blue); }
+
+    .social-links-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .social-link-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: .88rem; font-weight: 500;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .social-link-card i { font-size: 1.15rem; width: 22px; text-align: center; }
+    .social-link-card:hover { background: var(--navy); color: #fff; border-color: var(--navy); transform: translateY(-3px); box-shadow: var(--shadow); }
+    .fa-github { color: #24292f; }
+    .fa-google-scholar-icon { color: #4285f4; }
+    .fa-linkedin { color: #0a66c2; }
+    .fa-x-twitter { color: #000; }
+    .social-link-card:hover i { color: #fff !important; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: .83rem; font-weight: 600; color: var(--text); }
+    .form-input, .form-textarea {
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .92rem;
+      color: var(--text);
+      background: var(--bg-card);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+      resize: vertical;
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+    }
+    .form-textarea { min-height: 130px; }
+    .btn-send {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue);
+      color: #fff;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-size: .92rem; font-weight: 600;
+      border: none; cursor: pointer;
+      transition: background var(--transition), transform .2s;
+      align-self: flex-start;
+    }
+    .btn-send:hover { background: var(--navy); transform: translateY(-2px); }
+    .form-note { font-size: .78rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.55);
+      padding: 36px 0;
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-copy { font-size: .85rem; }
+    .footer-copy a { color: var(--accent); }
+    .back-to-top {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: .82rem; font-weight: 600;
+      color: rgba(255,255,255,.55);
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 100px;
+      transition: all var(--transition);
+    }
+    .back-to-top:hover { background: rgba(255,255,255,.08); color: #fff; }
+
+    /* =========================================================
+       UTILITIES
+    ========================================================= */
+    .sr-only { position: absolute; width:1px; height:1px; clip: rect(0,0,0,0); overflow: hidden; }
+
+    /* =========================================================
+       SCROLL ANIMATIONS
+    ========================================================= */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+    @media (max-width: 900px) {
+      .about-grid, .teaching-layout, .cv-layout, .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .hero-inner { flex-direction: column; text-align: center; gap: 32px; }
+      .hero-socials { justify-content: center; }
+      .hero-actions { justify-content: center; }
+      .hero-tagline { margin: 0 auto 36px; }
+      .hero-badge { margin: 0 auto 22px; }
+    }
+    @media (max-width: 640px) {
+      section { padding: 64px 0; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-photo { width: 160px; height: 160px; }
+      .social-links-grid { grid-template-columns: 1fr; }
+      .pub-card { flex-direction: column; gap: 12px; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Smit B Kumbhani</h1>
-    <p>Phd in Computational Finance</p>
+
+  <!-- =====================================================================
+       NAVIGATION
+  ===================================================================== -->
+  <nav id="navbar" role="navigation" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <!-- EDIT: Your short name or initials for the brand -->
+      <a href="#home" class="nav-brand">Dr. <span>Your Name</span></a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <!-- EDIT: Link your actual CV PDF file -->
+        <li><a href="#" class="btn-cv" aria-label="Download CV"><i class="fa-solid fa-file-pdf"></i> CV</a></li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="nav-mobile" id="navMobile" role="menu">
+      <a href="#home" role="menuitem">Home</a>
+      <a href="#about" role="menuitem">About</a>
+      <a href="#research" role="menuitem">Research</a>
+      <a href="#publications" role="menuitem">Publications</a>
+      <a href="#teaching" role="menuitem">Teaching</a>
+      <a href="#cv" role="menuitem">CV</a>
+      <a href="#contact" role="menuitem">Contact</a>
+    </div>
+  </nav>
+
+  <!-- =====================================================================
+       HERO / HOME
+  ===================================================================== -->
+  <section id="home" aria-labelledby="hero-name">
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Profile photo -->
+        <div class="hero-photo-wrap">
+          <div class="hero-photo">
+            <!-- EDIT: Replace SVG below with <img src="photo.jpg" alt="Dr. Your Name"> -->
+            <svg viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg" aria-label="Profile photo placeholder" role="img" width="210" height="210">
+              <rect width="210" height="210" fill="#1a3a6e"/>
+              <!-- Body -->
+              <ellipse cx="105" cy="155" rx="52" ry="32" fill="#2563eb" opacity=".45"/>
+              <!-- Head -->
+              <circle cx="105" cy="90" r="38" fill="#3b82f6" opacity=".55"/>
+              <!-- Inner face shape -->
+              <circle cx="105" cy="88" r="28" fill="#93c5fd" opacity=".3"/>
+              <!-- Icon hint -->
+              <text x="105" y="95" text-anchor="middle" font-size="26" fill="rgba(255,255,255,.35)" font-family="sans-serif">👤</text>
+              <!-- Label -->
+              <text x="105" y="178" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.4)" font-family="sans-serif">Your Photo Here</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Hero text -->
+        <div class="hero-text">
+          <div class="hero-badge">
+            <i class="fa-solid fa-circle-dot"></i>
+            <!-- EDIT: Your position type, e.g. Associate Professor, Postdoctoral Fellow -->
+            Available for Collaboration
+          </div>
+
+          <!-- EDIT: Your full name -->
+          <h1 class="hero-name" id="hero-name">Dr. Your Full Name</h1>
+
+          <!-- EDIT: Your title and department -->
+          <p class="hero-title">Associate Professor of Computer Science</p>
+
+          <!-- EDIT: Your university / institution -->
+          <p class="hero-affil"><i class="fa-solid fa-building-columns"></i> University of Placeholder, City, Country</p>
+
+          <!-- EDIT: A one-sentence research tagline -->
+          <p class="hero-tagline">"Exploring the frontiers of machine learning and human-computer interaction to build more equitable intelligent systems."</p>
+
+          <div class="hero-actions">
+            <!-- EDIT: Link to your actual CV PDF -->
+            <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Download CV</a>
+            <a href="#research" class="btn btn-outline"><i class="fa-solid fa-flask"></i> View Research</a>
+          </div>
+
+          <div class="hero-socials" aria-label="Social media links">
+            <!-- EDIT: Replace # with your actual profile URLs -->
+            <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="#" aria-label="Google Scholar"><i class="fa-solid fa-graduation-cap"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       ABOUT
+  ===================================================================== -->
+  <section id="about" aria-labelledby="about-title">
+    <div class="container">
+      <p class="section-label">Who I Am</p>
+      <h2 class="section-title" id="about-title">About Me</h2>
+      <div class="section-divider"></div>
+
+      <div class="about-grid">
+        <!-- Left: Biography + Research Interests -->
+        <div class="fade-up">
+          <!-- EDIT: Write your biography below -->
+          <div class="about-bio">
+            <p>
+              I am an <strong>Associate Professor</strong> in the Department of Computer Science at the
+              <strong>University of Placeholder</strong>, where I lead the Intelligent Systems Research Group.
+              My work sits at the intersection of machine learning, data science, and human-centered computing.
+            </p>
+            <p>
+              Before joining Placeholder, I was a postdoctoral researcher at the <strong>Institute of
+              Advanced Computation, Anytown University</strong>. I completed my Ph.D. at the
+              <strong>School of Engineering, Flagship State University</strong> under the supervision
+              of Prof. Mentor Name.
+            </p>
+            <p>
+              My research is funded by grants from <strong>Placeholder Funding Agency</strong> and
+              several industry partners. I serve on the editorial board of the
+              <em>Journal of Placeholder Research</em> and regularly review for top-tier venues
+              including NeurIPS, ICML, and ACL.
+            </p>
+          </div>
+
+          <h3 style="font-size:.95rem;font-weight:600;color:var(--navy);margin-top:28px;margin-bottom:10px;">Research Interests</h3>
+          <div class="interests-list">
+            <!-- EDIT: Replace with your actual research interests -->
+            <span class="interest-tag">Machine Learning</span>
+            <span class="interest-tag">Natural Language Processing</span>
+            <span class="interest-tag">Fairness & Bias in AI</span>
+            <span class="interest-tag">Human-Computer Interaction</span>
+            <span class="interest-tag">Graph Neural Networks</span>
+            <span class="interest-tag">Federated Learning</span>
+            <span class="interest-tag">Interpretable ML</span>
+          </div>
+        </div>
+
+        <!-- Right: Education Timeline -->
+        <div class="fade-up">
+          <h3 class="edu-block-title">Education</h3>
+          <div class="edu-timeline">
+
+            <!-- EDIT: Education entry 1 -->
+            <div class="edu-item">
+              <div class="edu-dot"><i class="fa-solid fa-circle fa-2xs"></i></div>
+              <div class="edu-content">
+                <div class="edu-degree">Ph.D. in Computer Science</div>
+                <div class="edu-school">Flagship State University — School of Engineering</div>
+                <div class="edu-year">2013 – 2018</div>
+              </div>
+            </div>
+
+            <!-- EDIT: Education entry 2 -->
+            <div class="edu-item">
+              <div class="edu-dot"><i class="fa-solid fa-circle fa-2xs"></i></div>
+              <div class="edu-content">
+                <div class="edu-degree">M.Sc. in Applied Mathematics</div>
+                <div class="edu-school">Anytown University</div>
+                <div class="edu-year">2011 – 2013</div>
+              </div>
+            </div>
+
+            <!-- EDIT: Education entry 3 -->
+            <div class="edu-item">
+              <div class="edu-dot"><i class="fa-solid fa-circle fa-2xs"></i></div>
+              <div class="edu-content">
+                <div class="edu-degree">B.Tech. in Information Technology</div>
+                <div class="edu-school">National Institute of Placeholder</div>
+                <div class="edu-year">2007 – 2011</div>
+              </div>
+            </div>
+
+          </div><!-- /.edu-timeline -->
+        </div>
+
+      </div><!-- /.about-grid -->
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       RESEARCH
+  ===================================================================== -->
+  <section id="research" class="section-alt" aria-labelledby="research-title">
+    <div class="container">
+      <p class="section-label">What I Work On</p>
+      <h2 class="section-title" id="research-title">Research Projects</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro">
+        <!-- EDIT: Short blurb about your research theme -->
+        My lab investigates how intelligent systems can be made more transparent, fair, and
+        beneficial — particularly in resource-constrained and high-stakes settings.
+      </p>
+
+      <div class="research-grid">
+
+        <!-- EDIT: Project 1 -->
+        <div class="project-card fade-up">
+          <div class="project-icon"><i class="fa-solid fa-brain"></i></div>
+          <h3 class="project-title">FairLearn: Bias Mitigation in Large Language Models</h3>
+          <p class="project-desc">
+            We study how stereotypes and demographic biases propagate through pre-trained language
+            models and develop post-hoc and in-training debiasing techniques that preserve model
+            utility while improving fairness across protected attributes.
+          </p>
+          <div class="project-keywords">
+            <span class="kw">LLMs</span>
+            <span class="kw">Fairness</span>
+            <span class="kw">Debiasing</span>
+            <span class="kw">NLP</span>
+          </div>
+        </div>
+
+        <!-- EDIT: Project 2 -->
+        <div class="project-card fade-up">
+          <div class="project-icon"><i class="fa-solid fa-network-wired"></i></div>
+          <h3 class="project-title">FedGraph: Federated Learning over Heterogeneous Graphs</h3>
+          <p class="project-desc">
+            This project develops privacy-preserving graph neural network training protocols for
+            distributed healthcare and financial networks, enabling collaborative learning without
+            sharing raw data across organizational boundaries.
+          </p>
+          <div class="project-keywords">
+            <span class="kw">Federated Learning</span>
+            <span class="kw">GNNs</span>
+            <span class="kw">Privacy</span>
+            <span class="kw">Healthcare AI</span>
+          </div>
+        </div>
+
+        <!-- EDIT: Project 3 -->
+        <div class="project-card fade-up">
+          <div class="project-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+          <h3 class="project-title">ExplainX: Human-in-the-Loop Model Explanations</h3>
+          <p class="project-desc">
+            ExplainX bridges interpretable machine learning and user-centered design, producing
+            explanations co-developed with domain experts to aid clinical decision support and
+            automated auditing systems.
+          </p>
+          <div class="project-keywords">
+            <span class="kw">Interpretability</span>
+            <span class="kw">HCI</span>
+            <span class="kw">Clinical AI</span>
+            <span class="kw">XAI</span>
+          </div>
+        </div>
+
+      </div><!-- /.research-grid -->
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       PUBLICATIONS
+  ===================================================================== -->
+  <section id="publications" aria-labelledby="pub-title">
+    <div class="container">
+      <p class="section-label">Scholarly Work</p>
+      <h2 class="section-title" id="pub-title">Publications</h2>
+      <div class="section-divider"></div>
+
+      <div class="pub-filter" role="group" aria-label="Filter publications">
+        <button class="pub-filter-btn active" data-filter="all">All</button>
+        <button class="pub-filter-btn" data-filter="journal">Journal Articles</button>
+        <button class="pub-filter-btn" data-filter="conference">Conference Papers</button>
+      </div>
+
+      <!-- Journal Articles -->
+      <div class="pub-group-title" data-type="journal">Journal Articles</div>
+      <div class="pub-list" data-type="journal">
+
+        <!-- EDIT: Journal publication 1 -->
+        <div class="pub-card" data-type="journal">
+          <div class="pub-year-badge">2024</div>
+          <div class="pub-content">
+            <div class="pub-title">Mitigating Demographic Bias in Pre-trained Language Models via Contrastive Fine-Tuning</div>
+            <!-- EDIT: Author list; bold your own name -->
+            <div class="pub-meta"><strong>Your Name</strong>, Co-Author A, Co-Author B, Senior Author · <em>Journal of Artificial Intelligence Research (JAIR)</em>, vol. 72, pp. 1–34</div>
+            <div class="pub-links">
+              <a href="#" class="pub-link"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-code"></i> Code</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-link"></i> DOI</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- EDIT: Journal publication 2 -->
+        <div class="pub-card" data-type="journal">
+          <div class="pub-year-badge">2023</div>
+          <div class="pub-content">
+            <div class="pub-title">Privacy-Preserving Graph Neural Networks for Distributed Healthcare Analytics</div>
+            <div class="pub-meta">Co-Author C, <strong>Your Name</strong>, Co-Author D · <em>IEEE Transactions on Neural Networks and Learning Systems</em>, vol. 34, no. 9, pp. 5801–5816</div>
+            <div class="pub-links">
+              <a href="#" class="pub-link"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-link"></i> DOI</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- EDIT: Journal publication 3 -->
+        <div class="pub-card" data-type="journal">
+          <div class="pub-year-badge">2022</div>
+          <div class="pub-content">
+            <div class="pub-title">Human-Centered Evaluation Frameworks for Explainable AI Systems in Clinical Settings</div>
+            <div class="pub-meta"><strong>Your Name</strong>, Co-Author E · <em>ACM Transactions on Computer-Human Interaction (TOCHI)</em>, vol. 29, no. 4, Article 38</div>
+            <div class="pub-links">
+              <a href="#" class="pub-link"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-code"></i> Code</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-database"></i> Dataset</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-link"></i> DOI</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.pub-list journal -->
+
+      <!-- Conference Papers -->
+      <div class="pub-group-title" data-type="conference">Conference Papers</div>
+      <div class="pub-list" data-type="conference">
+
+        <!-- EDIT: Conference paper 1 -->
+        <div class="pub-card" data-type="conference">
+          <div class="pub-year-badge">2024</div>
+          <div class="pub-content">
+            <div class="pub-title">FedGraph: Scalable Federated Learning on Heterogeneous Graph Structures</div>
+            <div class="pub-meta"><strong>Your Name</strong>, Co-Author F, Co-Author G · <em>Advances in Neural Information Processing Systems (NeurIPS 2024)</em>, New Orleans, USA</div>
+            <div class="pub-links">
+              <a href="#" class="pub-link"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-person-chalkboard"></i> Poster</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-code"></i> Code</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- EDIT: Conference paper 2 -->
+        <div class="pub-card" data-type="conference">
+          <div class="pub-year-badge">2023</div>
+          <div class="pub-content">
+            <div class="pub-title">Contrastive Explanations for Black-Box Classifiers with User Preference Constraints</div>
+            <div class="pub-meta">Co-Author H, <strong>Your Name</strong> · <em>Proceedings of the 40th International Conference on Machine Learning (ICML 2023)</em>, Honolulu, Hawaii</div>
+            <div class="pub-links">
+              <a href="#" class="pub-link"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+              <a href="#" class="pub-link"><i class="fa-brands fa-youtube"></i> Talk</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-code"></i> Code</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- EDIT: Conference paper 3 -->
+        <div class="pub-card" data-type="conference">
+          <div class="pub-year-badge">2022</div>
+          <div class="pub-content">
+            <div class="pub-title">Benchmark Analysis of Fairness Metrics Across Demographic Groups in Hate Speech Detection</div>
+            <div class="pub-meta"><strong>Your Name</strong>, Co-Author I, Co-Author J · <em>Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (ACL 2022)</em>, Dublin, Ireland</div>
+            <div class="pub-links">
+              <a href="#" class="pub-link"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+              <a href="#" class="pub-link"><i class="fa-solid fa-person-chalkboard"></i> Slides</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.pub-list conference -->
+
+      <p style="margin-top:32px; font-size:.88rem; color:var(--text-muted);">
+        <!-- EDIT: Link to your Google Scholar or DBLP -->
+        For a complete list, visit my <a href="#" style="font-weight:600;">Google Scholar profile</a>.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       TEACHING
+  ===================================================================== -->
+  <section id="teaching" class="section-alt" aria-labelledby="teaching-title">
+    <div class="container">
+      <p class="section-label">In the Classroom</p>
+      <h2 class="section-title" id="teaching-title">Teaching</h2>
+      <div class="section-divider"></div>
+
+      <div class="teaching-layout">
+
+        <!-- Left: Philosophy -->
+        <div class="fade-up">
+          <h3 style="font-size:1.1rem;color:var(--navy);margin-bottom:18px;">Teaching Philosophy</h3>
+          <!-- EDIT: Write your own teaching philosophy -->
+          <div class="teaching-philosophy">
+            <p>
+              I believe great teaching happens at the boundary of theory and practice. My courses
+              are designed to challenge students to think rigorously while building real-world
+              skills. I emphasize collaborative problem-solving, peer review, and iterative
+              project work.
+            </p>
+            <blockquote>
+              "The goal of education is not to fill a bucket, but to light a fire — and in
+              computer science, that fire should illuminate both the elegance of abstraction
+              and the messiness of real data."
+            </blockquote>
+            <p>
+              I am particularly committed to creating inclusive classrooms. I maintain
+              flexible office hours, publish all course materials openly, and actively
+              encourage students from underrepresented groups to pursue research opportunities
+              in my lab.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: Course list -->
+        <div class="fade-up">
+          <h3 style="font-size:1.1rem;color:var(--navy);margin-bottom:18px;">Courses Taught</h3>
+          <div class="courses-list">
+
+            <!-- EDIT: Course 1 -->
+            <div class="course-card">
+              <div class="course-header">
+                <div class="course-name">Advanced Machine Learning</div>
+                <span class="course-level">Graduate</span>
+              </div>
+              <div class="course-code">CS 801 · Fall 2022, 2023, 2024</div>
+              <div class="course-desc">Covers statistical learning theory, kernel methods, deep learning, and recent advances in foundation models.</div>
+            </div>
+
+            <!-- EDIT: Course 2 -->
+            <div class="course-card">
+              <div class="course-header">
+                <div class="course-name">Responsible AI & Ethics</div>
+                <span class="course-level">Undergraduate / Graduate</span>
+              </div>
+              <div class="course-code">CS 456 · Spring 2023, 2024</div>
+              <div class="course-desc">Examines bias, fairness, accountability, and transparency in AI systems through case studies and hands-on audits.</div>
+            </div>
+
+            <!-- EDIT: Course 3 -->
+            <div class="course-card">
+              <div class="course-header">
+                <div class="course-name">Data Structures & Algorithms</div>
+                <span class="course-level">Undergraduate</span>
+              </div>
+              <div class="course-code">CS 201 · Fall 2019, 2020, 2021</div>
+              <div class="course-desc">Foundational course covering sorting, searching, graph algorithms, and complexity analysis with weekly programming labs.</div>
+            </div>
+
+            <!-- EDIT: Course 4 -->
+            <div class="course-card">
+              <div class="course-header">
+                <div class="course-name">Human-Computer Interaction</div>
+                <span class="course-level">Undergraduate</span>
+              </div>
+              <div class="course-code">CS 370 · Spring 2020, 2021, 2022</div>
+              <div class="course-desc">Covers usability principles, user research methods, prototyping, and the design of accessible interfaces.</div>
+            </div>
+
+          </div><!-- /.courses-list -->
+        </div>
+
+      </div><!-- /.teaching-layout -->
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       CV
+  ===================================================================== -->
+  <section id="cv" aria-labelledby="cv-title">
+    <div class="container">
+      <p class="section-label">Career</p>
+      <h2 class="section-title" id="cv-title">Curriculum Vitae</h2>
+      <div class="section-divider"></div>
+
+      <div class="cv-layout">
+
+        <!-- Left: Download + Summary -->
+        <div class="fade-up">
+          <div class="cv-download-card">
+            <h3><i class="fa-solid fa-file-lines" style="margin-right:8px;color:var(--accent)"></i> Full CV</h3>
+            <p>Download my complete curriculum vitae including publications, grants, service, and mentorship record.</p>
+            <!-- EDIT: Replace # with the path to your CV PDF, e.g. assets/cv_yourname.pdf -->
+            <a href="#" class="btn-download" download><i class="fa-solid fa-download"></i> Download PDF</a>
+          </div>
+
+          <h3 style="font-family:'Lora',serif;font-size:1.1rem;color:var(--navy);margin-bottom:16px;">Selected Awards & Grants</h3>
+          <ul style="display:flex;flex-direction:column;gap:12px;">
+            <!-- EDIT: Replace with your actual awards -->
+            <li style="display:flex;gap:12px;align-items:flex-start;">
+              <i class="fa-solid fa-award" style="color:var(--accent);margin-top:3px;flex-shrink:0;"></i>
+              <span style="font-size:.9rem;color:var(--text-muted);"><strong style="color:var(--text);">Best Paper Award</strong> — NeurIPS 2024 Workshop on Responsible AI</span>
+            </li>
+            <li style="display:flex;gap:12px;align-items:flex-start;">
+              <i class="fa-solid fa-award" style="color:var(--accent);margin-top:3px;flex-shrink:0;"></i>
+              <span style="font-size:.9rem;color:var(--text-muted);"><strong style="color:var(--text);">Placeholder Research Grant</strong> ($250,000) — Placeholder Funding Agency, 2022–2025</span>
+            </li>
+            <li style="display:flex;gap:12px;align-items:flex-start;">
+              <i class="fa-solid fa-award" style="color:var(--accent);margin-top:3px;flex-shrink:0;"></i>
+              <span style="font-size:.9rem;color:var(--text-muted);"><strong style="color:var(--text);">Outstanding Teaching Award</strong> — University of Placeholder, 2021</span>
+            </li>
+            <li style="display:flex;gap:12px;align-items:flex-start;">
+              <i class="fa-solid fa-award" style="color:var(--accent);margin-top:3px;flex-shrink:0;"></i>
+              <span style="font-size:.9rem;color:var(--text-muted);"><strong style="color:var(--text);">Doctoral Fellowship</strong> — Flagship State University, 2013–2018</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: Positions Timeline -->
+        <div class="fade-up">
+          <h3 style="font-family:'Lora',serif;font-size:1.1rem;color:var(--navy);margin-bottom:24px;">Academic Positions</h3>
+          <div class="positions-list">
+
+            <!-- EDIT: Position 1 (current) -->
+            <div class="position-item">
+              <div class="pos-dot"></div>
+              <div>
+                <div class="pos-role">Associate Professor</div>
+                <div class="pos-place">Department of Computer Science, University of Placeholder</div>
+                <div class="pos-period">2022 – Present</div>
+              </div>
+            </div>
+
+            <!-- EDIT: Position 2 -->
+            <div class="position-item">
+              <div class="pos-dot"></div>
+              <div>
+                <div class="pos-role">Assistant Professor</div>
+                <div class="pos-place">Department of Computer Science, University of Placeholder</div>
+                <div class="pos-period">2018 – 2022</div>
+              </div>
+            </div>
+
+            <!-- EDIT: Position 3 -->
+            <div class="position-item">
+              <div class="pos-dot"></div>
+              <div>
+                <div class="pos-role">Postdoctoral Research Fellow</div>
+                <div class="pos-place">Institute of Advanced Computation, Anytown University</div>
+                <div class="pos-period">2017 – 2018</div>
+              </div>
+            </div>
+
+            <!-- EDIT: Position 4 -->
+            <div class="position-item">
+              <div class="pos-dot"></div>
+              <div>
+                <div class="pos-role">Graduate Research Assistant</div>
+                <div class="pos-place">Flagship State University</div>
+                <div class="pos-period">2013 – 2017</div>
+              </div>
+            </div>
+
+          </div><!-- /.positions-list -->
+        </div>
+
+      </div><!-- /.cv-layout -->
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       CONTACT
+  ===================================================================== -->
+  <section id="contact" class="section-alt" aria-labelledby="contact-title">
+    <div class="container">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title" id="contact-title">Contact</h2>
+      <div class="section-divider"></div>
+
+      <div class="contact-layout">
+
+        <!-- Left: Info + Socials -->
+        <div class="fade-up">
+          <div class="contact-info-list">
+
+            <!-- EDIT: Your email address -->
+            <div class="contact-info-item">
+              <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div>
+                <div class="contact-label">Email</div>
+                <div class="contact-value"><a href="mailto:your.email@example.edu">your.email@example.edu</a></div>
+              </div>
+            </div>
+
+            <!-- EDIT: Your office location -->
+            <div class="contact-info-item">
+              <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+              <div>
+                <div class="contact-label">Office</div>
+                <div class="contact-value">Room 314, Computing Building<br>University of Placeholder<br>Placeholder City, PC 12345</div>
+              </div>
+            </div>
+
+            <!-- EDIT: Your office hours -->
+            <div class="contact-info-item">
+              <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+              <div>
+                <div class="contact-label">Office Hours</div>
+                <div class="contact-value">Tuesday & Thursday, 2:00 – 4:00 PM<br><span style="font-size:.83rem;color:var(--text-muted);">Or by appointment via email</span></div>
+              </div>
+            </div>
+
+            <!-- EDIT: Your phone (optional — remove if preferred) -->
+            <div class="contact-info-item">
+              <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+              <div>
+                <div class="contact-label">Phone</div>
+                <div class="contact-value">+1 (555) 000-0000</div>
+              </div>
+            </div>
+
+          </div><!-- /.contact-info-list -->
+
+          <h3 style="font-size:.95rem;font-weight:600;color:var(--navy);margin:32px 0 14px;">Find Me Online</h3>
+          <div class="social-links-grid">
+            <!-- EDIT: Replace # with actual profile URLs -->
+            <a href="#" class="social-link-card" aria-label="GitHub">
+              <i class="fa-brands fa-github fa-github"></i> GitHub
+            </a>
+            <a href="#" class="social-link-card" aria-label="Google Scholar">
+              <i class="fa-solid fa-graduation-cap" style="color:#4285f4;"></i> Google Scholar
+            </a>
+            <a href="#" class="social-link-card" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin fa-linkedin"></i> LinkedIn
+            </a>
+            <a href="#" class="social-link-card" aria-label="Twitter / X">
+              <i class="fa-brands fa-x-twitter fa-x-twitter"></i> Twitter / X
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Contact Form -->
+        <div class="fade-up">
+          <h3 style="font-size:1.05rem;font-weight:600;color:var(--navy);margin-bottom:20px;">Send a Message</h3>
+          <!-- NOTE: This form is static. To make it functional, integrate a service such as
+               Formspree (https://formspree.io), Netlify Forms, or EmailJS. -->
+          <div class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label class="form-label" for="cf-name">Your Name</label>
+              <input type="text" id="cf-name" class="form-input" placeholder="Jane Smith" autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-email">Email Address</label>
+              <input type="email" id="cf-email" class="form-input" placeholder="jane@example.com" autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-subject">Subject</label>
+              <input type="text" id="cf-subject" class="form-input" placeholder="Research collaboration inquiry" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-message">Message</label>
+              <textarea id="cf-message" class="form-textarea" placeholder="Hello Dr. Your Name, I am interested in..."></textarea>
+            </div>
+            <button type="button" class="btn-send" id="sendBtn">
+              <i class="fa-solid fa-paper-plane"></i> Send Message
+            </button>
+            <p class="form-note" id="formNote" style="display:none;color:var(--blue);font-weight:600;"></p>
+          </div>
+        </div>
+
+      </div><!-- /.contact-layout -->
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       FOOTER
+  ===================================================================== -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-copy">
+          <!-- EDIT: Your name and year -->
+          &copy; <span id="year"></span> <a href="#home">Dr. Your Name</a>. All rights reserved.
+          Built with plain HTML, CSS & JS.
+        </p>
+        <a href="#home" class="back-to-top" aria-label="Back to top">
+          <i class="fa-solid fa-arrow-up"></i> Back to top
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       JAVASCRIPT
+  ===================================================================== -->
+  <script>
+    'use strict';
+
+    /* ------------------------------------------------------------------
+       1. Dynamic year in footer
+    ------------------------------------------------------------------ */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ------------------------------------------------------------------
+       2. Hamburger / mobile menu toggle
+    ------------------------------------------------------------------ */
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('navMobile');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMobile.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close mobile menu when a link inside it is clicked
+    navMobile.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMobile.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!navMobile.contains(e.target) && !hamburger.contains(e.target)) {
+        navMobile.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    /* ------------------------------------------------------------------
+       3. Active nav link highlight on scroll (Intersection Observer)
+    ------------------------------------------------------------------ */
+    const sections  = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => sectionObserver.observe(s));
+
+    /* ------------------------------------------------------------------
+       4. Scroll-triggered fade-up animations
+    ------------------------------------------------------------------ */
+    const fadeEls = document.querySelectorAll('.fade-up');
+
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Stagger siblings in the same parent
+          const siblings = Array.from(entry.target.parentElement.querySelectorAll('.fade-up'));
+          const idx = siblings.indexOf(entry.target);
+          entry.target.style.transitionDelay = `${idx * 80}ms`;
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeEls.forEach(el => fadeObserver.observe(el));
+
+    /* ------------------------------------------------------------------
+       5. Publication filter buttons
+    ------------------------------------------------------------------ */
+    const filterBtns = document.querySelectorAll('.pub-filter-btn');
+    const pubGroups  = document.querySelectorAll('.pub-group-title, .pub-list');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+
+        pubGroups.forEach(el => {
+          const type = el.dataset.type;
+          if (filter === 'all' || filter === type) {
+            el.style.display = '';
+          } else {
+            el.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    /* ------------------------------------------------------------------
+       6. Simple contact form simulation
+       NOTE: Replace this with a real backend/Formspree/Netlify integration.
+    ------------------------------------------------------------------ */
+    document.getElementById('sendBtn').addEventListener('click', () => {
+      const name    = document.getElementById('cf-name').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const message = document.getElementById('cf-message').value.trim();
+      const note    = document.getElementById('formNote');
+
+      if (!name || !email || !message) {
+        note.style.display = 'block';
+        note.style.color = '#dc2626';
+        note.textContent = 'Please fill in your name, email, and message.';
+        return;
+      }
+
+      // Simulate sending (replace with actual API call / Formspree submit)
+      const btn = document.getElementById('sendBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending…';
+
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Sent!';
+        btn.style.background = '#16a34a';
+        note.style.display = 'block';
+        note.style.color = '#16a34a';
+        note.textContent = 'Thanks for reaching out! I'll get back to you soon.';
+      }, 1400);
+    });
+
+    /* ------------------------------------------------------------------
+       7. Navbar shadow on scroll
+    ------------------------------------------------------------------ */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.style.boxShadow = window.scrollY > 10
+        ? '0 4px 20px rgba(15,37,69,.13)'
+        : '0 2px 8px rgba(15,37,69,.07)';
+    }, { passive: true });
+
+  </script>
 </body>
 </html>
